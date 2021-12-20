@@ -12,9 +12,16 @@ def main_page():
 def form_page():
     return render_template("form_selection.html")
 
-@app.route("/form/register")
+@app.route("/form/register",methods=["GET","POST"])
 def register_page():
-    return "Building"
+    if request.method == 'GET' :
+        return render_template("register.html")
+
+@app.route("/form/register/done",methods=["GET","POST"])
+def inscription_confirmation():
+    
+    print(f"Inscription équipe {request.form['name']}")
+    return render_template('confirmation.html',team_name=request.form['name'])
 
 @app.route("/form/unregister")
 def unregister_page():
@@ -27,6 +34,8 @@ def defisolo_page():
 @app.route("/form/defivs")
 def defivs_page():
     return "Building"
+
+
 
 
 
