@@ -1,6 +1,9 @@
 import mysql.connector
 from mysql.connector import Error
+from mysql.connector.connection import MySQLConnection
 import sqlparse
+
+
 
 #Initialize Database
 def init_random():
