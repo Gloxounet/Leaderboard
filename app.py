@@ -2,7 +2,7 @@ from flask import Flask, request, render_template
 
 app = Flask(__name__)
 
-#We will receive messages that Facebook sends our bot at this endpoint 
+
 @app.route("/")
 def main_page():
     dict_leaderboard:dict = get_dict_leaderboard()
@@ -19,9 +19,8 @@ def register_page():
 
 @app.route("/form/register/done",methods=["GET","POST"])
 def inscription_confirmation():
-    
-    print(f"Inscription équipe {request.form['name']}")
-    return render_template('confirmation.html',team_name=request.form['name'])
+    print(f"Inscription équipe {request.form['name']}")#TODO SQL INSCRIPTION
+    return render_template('confirmation.html',team_name=f"Votre équipe {request.form['name']} a bien été enregistrée")
 
 @app.route("/form/unregister")
 def unregister_page():
@@ -46,4 +45,4 @@ def get_dict_leaderboard()->dict :
 
 if __name__ == "__main__":
     app.debug = True
-    app.run()
+    app.run(host="0.0.0.0")
