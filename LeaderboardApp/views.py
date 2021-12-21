@@ -9,8 +9,9 @@ from LeaderboardApp.models.sqlclient import Error,IntegrityError
 #Leaderboard--------------------------------------------------------------
 @app.route("/")
 def main_page():
-    dict_leaderboard:dict = get_dict_leaderboard()
-    return render_template("index.html",dict_leaderboard=dict_leaderboard)
+    with Client() as c :
+        leaderboard_list = c.get_all_teams_points() 
+    return render_template("index.html",leaderboard_list=leaderboard_list)
 
 
 #Formulaire---------------------------------------------------------------

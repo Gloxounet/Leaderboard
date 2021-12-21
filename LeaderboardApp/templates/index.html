@@ -6,7 +6,9 @@
 <body>
     {#Visualisation of current Leaderboard#}
     <h1>Current Leaderboard</h1>
-    <p>{{ a_variable }}</p>
+    {% for (team,score) in leaderboard_list %}
+    <p>Team '{{team}}' : {{score}} points</p>
+    {% endfor %}
 
     {#Manage teams#}
     <h2>
