@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Register your team</title>
+</head>
+<body>
+    <form action='/form/unregister' method='post'>
+
+        <label for="liste">Choose a team to delete:</label>
+
+        <select name="liste" id="liste">
+            
+            <option value="" selected>--Merci de choisir une équipe--</option>
+
+            {% for name in name_list%}
+                <option>{{name}}</option>
+            {% endfor %}
+
+            <input type="submit" value="Valider">
+
+        </select>
+    </form>
+
+</body>
+</html>

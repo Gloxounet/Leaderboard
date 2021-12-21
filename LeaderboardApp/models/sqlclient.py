@@ -1,6 +1,7 @@
 import mysql.connector
-from mysql.connector.errors import Error
+from mysql.connector.errors import Error,IntegrityError
 import sqlparse
+import re
 
 class Client(object):
        
@@ -58,6 +59,7 @@ class Client(object):
     #Ecriture SQL
     def fast_delete_on_pk(self,table:str,pk_name,pk):
         if type(pk) == str :
+            pk = pk.replace("'",r"\'")
             pk = "\'"+pk+"\'"
         sql = f"DELETE FROM {table} WHERE {pk_name} = {pk}"
         return sql
@@ -65,10 +67,18 @@ class Client(object):
         colonnes = names.__str__()[1:-1]
         colonnes = [i for i in colonnes if i!="\'"]
         colonnes = "(" + "".join(colonnes) + ")"
+        #Délétions des espaces en trop
+        for i,v in enumerate(values) :
+            if type(v) == str :
+                values [i] = v.strip()
+                
         values = "(" + values.__str__()[1:-1] + ")"
         sql = f"INSERT INTO {table} {colonnes} VALUES {values}"
         return sql
     
+    def get_table(self,table:str,filter="*"):
+        sql = f"SELECT {filter} FROM {table}"
+        return self.process_get(sql)
     
     #Défis
     def createDéfis(self, name:str, coef:float, solo:bool)->None:
@@ -137,4 +147,5 @@ if __name__ == "__main__" :
         #c.createDéfiSolo(1,'Sucage de bite','oui',10)
         #c.createDéfiSolo(2,'Sucage de bite','oui',12)
         #print(c.get_max_id('défisolo'))
+        #print(c.get_table('teams','name'))
         
