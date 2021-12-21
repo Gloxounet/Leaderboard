@@ -3,6 +3,9 @@ from mysql.connector.errors import Error,IntegrityError
 import sqlparse
 import re
 
+global_pretify = False
+global_echo_connection = False
+
 class Client(object):
        
     def __init__(self,host='localhost',database='data_leaderboard', user='root',password='root'):
@@ -12,7 +15,8 @@ class Client(object):
         
         if self.connection.is_connected():
             db_Info = self.connection.get_server_info()
-            print("Connected to MySQL Server version ", db_Info)
+            if global_echo_connection :
+                print("Connected to MySQL Server version ", db_Info)
             self.cursor = self.connection.cursor()
 
     def close(self):
@@ -41,14 +45,14 @@ class Client(object):
         self.connection.commit()
         print(f"All tables from {database_name} have been truncated")
 
-    def process_send(self,sql,pretify=False) :
+    def process_send(self,sql,pretify=global_pretify) :
         self.cursor.execute(sql)
         if pretify :
             self.pretify_sql(sql)
         self.connection.commit()
         #self.connection.close()
         return
-    def process_get(self,sql,pretify=False) :
+    def process_get(self,sql,pretify=global_pretify) :
         self.cursor.execute(sql)
         if pretify :
             self.pretify_sql(sql)
@@ -138,12 +142,15 @@ class Client(object):
         return self
        
     def __exit__(self,type,value,traceback) :
-        print("Connexion closed")
+        if global_echo_connection :
+            print("Connexion closed")
         self.close()     
 
 if __name__ == "__main__" :
     with Client() as c :
-        c.TruncateAll(c.database)
+        prompt = input("Entrez y si vous souhaitez réinitialiser le contenu des tables")
+        if prompt == "y" or prompt == "Y" :
+            c.TruncateAll(c.database)
         #c.createDéfiSolo(1,'Sucage de bite','oui',10)
         #c.createDéfiSolo(2,'Sucage de bite','oui',12)
         #print(c.get_max_id('défisolo'))
