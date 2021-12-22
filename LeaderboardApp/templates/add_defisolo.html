@@ -5,31 +5,37 @@
 </head>
 <body>
     <form action='/form/defisolo' method='post'>
+        <div>
+            {#Selection de l'équipe#}
+            <label for="liste_equipe">Choix de l'équipe</label>
+            <select name="liste_equipe" id="liste_equipe">
+                <option value="" selected>--Merci de choisir une équipe--</option>
+                {% for name in team_name_list%}
+                    <option>{{name}}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div>
+            {#Selection du défi#}
+            <label for="liste_defi">Choix du défi</label>
+            <select name="liste_defi" id="liste_defi">
+                <option value="" selected>--Merci de choisir un défi--</option>
+                {% for name in defi_name_list%}
+                    <option>{{name}}</option>
+                {% endfor %}
+            </select>
+        </div>
 
-        {#Selection de l'équipe#}
-        <label for="liste_equipe">Choix de l'équipe</label>
-        <select name="liste_equipe" id="liste_equipe">
-            <option value="" selected>--Merci de choisir une équipe--</option>
-            {% for name in team_name_list%}
-                <option>{{name}}</option>
-            {% endfor %}
-        </select>
+        <div>
+            {#Nombre de points marqués#}
+            <label for="points">Points marqués</label>
+            <input type="number" id="points" name="points" min="0" max="100">
+        </div>
 
-        {#Selection du défi#}
-        <label for="liste_defi">Choix du défi</label>
-        <select name="liste_defi" id="liste_defi">
-            <option value="" selected>--Merci de choisir un défi--</option>
-            {% for name in defi_name_list%}
-                <option>{{name}}</option>
-            {% endfor %}
-        </select>
-
-        {#Nombre de points marqués#}
-        <label for="points">Points marqués</label>
-        <input type="number" id="points" name="points" min="0" max="100">
-
-        {#Bouton final#}
-        <input type="submit" value="Valider">
+        <div>
+            {#Bouton final#}
+            <input type="submit" value="Valider">
+        </div>
     </form>
 
 </body>
