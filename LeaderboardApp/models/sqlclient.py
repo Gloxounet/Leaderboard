@@ -1,9 +1,6 @@
 import mysql.connector
 from mysql.connector.errors import Error,IntegrityError
 import sqlparse
-import re
-
-from werkzeug.utils import format_string
 
 global_pretify = False
 global_echo_connection = False
